@@ -39,16 +39,22 @@
 </head>
 <body>
 
-<p>
-  A basic timeline. You can move and zoom the timeline, and select items.
-  Hide Timeline: <input type="checkbox" id="myCheck" unchecked>
+<p >
+  A basic timeline. You can move and zoom the timeline, and select items. <br>
+  Hide Lecture Timeline: <input type="checkbox" id="myCheck0" unchecked>
 </p>
+<p>Hide Activity Timeline: <input type="checkbox" id="myCheck1" unchecked></p>
+<p>Hide Interval Timeline: <input type="checkbox" id="myCheck2" unchecked></p>
 
-<div id="visualization"></div>
+<div id="visualization0" style="margin: 10px 0px 10px 0px"></div>
+<div id="visualization1" style="margin: 10px 0px 10px 0px"></div>
+<div id="visualization2" style="margin: 10px 0px 10px 0px"></div>
 
 <script type="text/javascript">
   // DOM element where the Timeline will be attached
-  var container = document.getElementById('visualization');
+  var container1 = document.getElementById('visualization0');
+  var container2 = document.getElementById('visualization1');
+  var container3 = document.getElementById('visualization2');
 
   // Create a DataSet (allows two way data-binding)
   /*
@@ -89,9 +95,9 @@
   };
 
   // Create a Timeline
-  var timeline1 = new vis.Timeline(container, items, options);
-  var timeline2 = new vis.Timeline(container, itemsActivity, options);
-  var timeline3 = new vis.Timeline(container, itemsInterval, options);
+  var timeline1 = new vis.Timeline(container1, items, options);
+  var timeline2 = new vis.Timeline(container2, itemsActivity, options);
+  var timeline3 = new vis.Timeline(container3, itemsInterval, options);
 
   timeline1.on('rangechange', onrangechange1);
   timeline2.on('rangechange', onrangechange2);
@@ -125,9 +131,17 @@
   timeline2.setItems(itemsActivity);
   timeline3.setItems(itemsInterval);
 
-  var checkBox = document.getElementById("myCheck");
-  checkBox.onchange = function () {
-    timeline1 = {visible: false}
+  var checkBox1 = document.getElementById("myCheck0");
+  var checkBox2 = document.getElementById("myCheck1"); 
+  var checkBox3 = document.getElementById("myCheck2");
+  checkBox1.onchange = function () {
+    container1.style.display = this.checked ? "none" : "block";
+  }
+  checkBox2.onchange = function () {
+    container2.style.display = this.checked ? "none" : "block";
+  }
+  checkBox3.onchange = function () {
+    container3.style.display = this.checked ? "none" : "block";
   }
 </script>
 </body>
