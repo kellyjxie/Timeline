@@ -41,86 +41,141 @@
     <script src="node_modules/vis/dist/vis.js"></script> 
     <link href="node_modules/vis/dist/vis.css" rel="stylesheet" type="text/css" /> 
     <script type="text/javascript" src="timeline.js"></script>
-    <link rel="stylesheet" type="text/css" href="timeline.css">      
+    <link rel="stylesheet" type="text/css" href="timeline.css">  
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">    
   
 </head>
 <body>
-
-<p>
-  A basic timeline. You can move and zoom the timeline, and select items.
-  Hide Timeline: <input type="checkbox" id="myCheck" unchecked>
-</p>
 
 <div id="visualization"></div>
 
 <script type="text/javascript">
   // DOM element where the Timeline will be attached
   var container = document.getElementById('visualization');
-  // Create a DataSet (allows two way data-binding)
-  /*
-  each element in a dataset must have unique id (?) not positive 
-  group corresponds to the container group object, can be a string
-  className allows you to customize specific items
-  */
+
+  /* Instructor and Student Activity Timeline */
+  var activity_groups = new vis.DataSet([
+    {content: "Lecture", id: "lecture", value: 1, className:'Instructor1'},
+    {content: "Lecturing & Writing", id: "lecture-writing", value: 2, className:'Instructor'},
+    {content: "Lecturing & Visuals", id: "lecture-visuals", value: 3, className:'Instructor1'},
+    {content: "Lecturing & Phenomena", id: "lecture-phenomena", value: 4, className: 'Instructor'},
+    {content: "Interactive Lecture", id: "interactive-lecture", value: 5, className: 'Instructor1'},
+    {content: "Multimedia", id: "multimedia", value: 6, className: 'Instructor'},
+    {content: "Clicker Question", id: "clicker-question", value: 7, className: 'Instructor1'},
+    {content: "Administrative Task", id: "admin-task", value: 8, className: 'Instructor'},
+    {content: "Idle", id: "idle", value: 9, className: 'Instructor1'},
+    {content: "Small Group Work", id: "small-group-work", value: 10, className: 'Student'},
+    {content: "Group Discussion", id: "group-discussion", value: 11, className: 'Student1'},
+    {content: "Student Presentation", id: "student-presentation", value: 12, className: 'Student'},
+    {content: "Deskwork", id: "deskwork", value: 13, className: 'Student1'},
+  ]);
+
   var items = new vis.DataSet([
-    {id: 1, content: 'item 1', start: '2014-04-20',  end: '2014-04-21', group: 1, className: 'lecture'},
-    {id: 2, content: 'item 2', start: '2014-04-14', end: '2014-04-16', group: 1, className: 'lecture'},
-    {id: 3, content: 'item 3', start: '2014-04-18', end: '2014-04-19', group: 1, className: 'lecture'},
+    {start: '2014-04-20', end: '2014-04-21', group:"lecture", className:"Instructor", content:""},
+    {start: '2014-04-14', end: '2014-04-16', group:"lecture-writing", className:"Instructor", content:""},
+    {start: '2014-04-5', end: '2014-04-7', group:"clicker-question", className:"Instructor", content:""},
+    {start: '2014-04-18', end: '2014-04-20', group:"clicker-question", className:"Instructor", content:""},
+    {start: '2014-04-10', end: '2014-04-13', group:"interactive-lecture", className:"Instructor", content:""},
+    {start: '2014-04-18', end: '2014-04-19', group:"lecture-writing", className:"Instructor", content:""},
+    {start: '2014-04-18', end: '2014-04-19', group:"answering-question", className:"Student", content:""},
+    {start: '2014-04-19', end: '2014-04-20', group:"small-group-work", className:"Student", content:""},
+    {start: '2014-04-15', end: '2014-04-16', group:"student-presentation", className:"Student", content:""},
+    {start: '2014-04-17', end: '2014-04-19', group:"group-discussion", className:"Student", content:""},
+
   ]);
-  var itemsActivity = new vis.DataSet([
-    {id: 4, content: 'item 4', start: '2014-04-16', end: '2014-04-19', group: 2, className: 'Activity'},
-    {id: 5, content: 'item 5', start: '2014-04-25', end: '2014-04-26', group: 2, className: 'Activity'},
+
+/* Events Timeline */
+  var event_groups = new vis.DataSet([
+    {content: "Closed Display Question", id: "closed-display-question", value: 14, className:'Instructor-event'},
+    {content: "Open Display Question", id: "open-display-question", value: 15, className:'Instructor-event1'},
+    {content: "Rhetorical Question", id: "rhetorical-question", value: 16, className:'Instructor-event'},
+    {content: "Provides Feedback", id: "provide-feedback", value: 17, className:'Instructor-event1'},
+    {content: "Display Question", id: "display-question", value: 18, className:'Student-event'},
+    {content: "Response to Instructor", id: "response-to-instructor", value: 19, className:'Student-event1'},
+    {content: "Response to Student", id: "response-to-student", value: 20, className:'Student-event'},
+    {content: "Makes Prediction", id: "makes-prediction", value: 21, className:'Student-event1'}
   ]);
-  
-  var itemsInterval = new vis.DataSet([
-    {id: 6, content: 'item 6', start: '2014-04-27', type: 'point', group: 3, className: 'Interval'}
-  ]);
-  /* 
-  content property is what is displayed on the timeline
-  id property corresponds to the 'group' property of events
-  */
-  var groups = new vis.DataSet();
-  groups.add({id: 1, content: 'Lecture'})
-  var groupsActivity = new vis.DataSet();
-  groupsActivity.add({id: 2, content: 'Activity'})
-  var groupsInterval = new vis.DataSet();
-  groupsInterval.add({id: 3, content: 'Interval'})
+
+  var event_items = new vis.DataSet([
+    {start: '2014-04-20', group:"closed-display-question", className:"Instructor-event", content:""},
+    {start: '2014-04-5', group:"open-display-question", className:"Instructor-event1", content:""},
+    {start: '2014-04-15', group:"rhetorical-question", className:"Instructor-event", content:""},
+    {start: '2014-04-10', group:"makes-prediction", className:"Student-event1", content:""},
+    {start:'2014-04-8', group: "response-to-student", className:"Student-event", content:""},
+    {start:'2014-04-18', group: "display-question", className:"Student-event", content:""}
+  ])
+
+  /* Interval Timeline */
+
   // Configuration for the Timeline
   var options = {
   };
+
   // Create a Timeline
   var timeline1 = new vis.Timeline(container, items, options);
-  var timeline2 = new vis.Timeline(container, itemsActivity, options);
-  var timeline3 = new vis.Timeline(container, itemsInterval, options);
+  var timeline2 = new vis.Timeline(container, event_items, options);
+
+  timeline1.setGroups(activity_groups);
+  timeline1.setItems(items);
+  timeline2.setGroups(event_groups);
+  timeline2.setItems(event_items);
+
+var interval_groups = new vis.DataSet();
+    interval_groups.add({id: 0, content: "group0"})
+    interval_groups.add({id: 1, content: "group1"})
+    interval_groups.add({id: 2, content: "group2"})
+    interval_groups.add({id: 3, content: "group3"})
+
+var interval_items = [
+    {x: '2014-06-11', y: 5, group:0},
+    {x: '2014-06-12', y: 5, group:2},
+    {x: '2014-06-13', y: 3, group:2},
+    {x: '2014-06-14', y: 4, group:1},
+    {x: '2014-06-15', y: 1, group:2},
+    {x: '2014-06-16', y: 8, group:0},
+    {x: '2014-06-11', y: 2, group:1},
+    {x: '2014-06-12', y: 4, group:1}
+];
+
+var dataset = new vis.DataSet(interval_items);
+var options = {
+        style:'bar',
+        stack:true,
+        barChart: {width:50, align:'center', sideBySide:false}, // align: left, center, right
+        drawPoints: false,
+        dataAxis: {
+            left: {
+            range: {min:0, max:30}
+        }
+        },
+        orientation:'top',
+        start: '2014-06-10',
+        end: '2014-06-18'
+};
+var graph2d = new vis.Graph2d(container, interval_items, interval_groups, options);
+
+
+// Moving all 3 times simultaneously
   timeline1.on('rangechange', onrangechange1);
   timeline2.on('rangechange', onrangechange2);
-  timeline3.on('rangechange', onrangechange3);
   
   function onrangechange1() {
     var range = timeline1.getWindow();
     timeline2.setWindow(range.start, range.end, {animation: false});
-    timeline3.setWindow(range.start, range.end, {animation: false});
   }
+
   function onrangechange2() {
     var range = timeline2.getWindow();
     timeline1.setWindow(range.start, range.end, {animation: false});  
-    timeline3.setWindow(range.start, range.end, {animation: false});
   }
+
   function onrangechange3() {
     var range = timeline3.getWindow();
     timeline1.setWindow(range.start, range.end, {animation: false});
     timeline2.setWindow(range.start, range.end, {animation: false});
   }
-  timeline1.setGroups(groups);
-  timeline2.setGroups(groupsActivity);
-  timeline3.setGroups(groupsInterval);
-  timeline1.setItems(items);
-  timeline2.setItems(itemsActivity);
-  timeline3.setItems(itemsInterval);
-  var checkBox = document.getElementById("myCheck");
-  checkBox.onchange = function () {
-    timeline1 = {visible: false}
-  }
+
+
 </script>
 </body>
 </html>
