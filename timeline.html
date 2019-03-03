@@ -43,9 +43,14 @@
     <script type="text/javascript" src="timeline.js"></script>
     <link rel="stylesheet" type="text/css" href="timeline.css">  
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   
 </head>
 <body>
+<p>
+  <button onclick="showActivityGroups()">Restore all Activities</button>
+  <button onclick="showEventGroups()">Restore all Events</button>
+</p>
 
 <div id="visualization"></div>
 
@@ -55,18 +60,18 @@
 
   /* Instructor and Student Activity Timeline */
   var activity_groups = new vis.DataSet([
-    {content: "Lecture", id: "lecture", value: 1, className:'Instructor1'},
+    {content: "Lecture", id: "lecture", value: 1, className:'Instructor'},
     {content: "Lecturing & Writing", id: "lecture-writing", value: 2, className:'Instructor'},
-    {content: "Lecturing & Visuals", id: "lecture-visuals", value: 3, className:'Instructor1'},
+    {content: "Lecturing & Visuals", id: "lecture-visuals", value: 3, className:'Instructor'},
     {content: "Lecturing & Phenomena", id: "lecture-phenomena", value: 4, className: 'Instructor'},
-    {content: "Interactive Lecture", id: "interactive-lecture", value: 5, className: 'Instructor1'},
+    {content: "Interactive Lecture", id: "interactive-lecture", value: 5, className: 'Instructor'},
     {content: "Multimedia", id: "multimedia", value: 6, className: 'Instructor'},
-    {content: "Clicker Question", id: "clicker-question", value: 7, className: 'Instructor1'},
+    {content: "Clicker Question", id: "clicker-question", value: 7, className: 'Instructor'},
     {content: "Administrative Task", id: "admin-task", value: 8, className: 'Instructor'},
-    {content: "Idle", id: "idle", value: 9, className: 'Instructor1'},
-    {content: "Small Group Work", id: "small-group-work", value: 10, className: 'Student'},
+    {content: "Idle", id: "idle", value: 9, className: 'Instructor'},
+    {content: "Small Group Work", id: "small-group-work", value: 10, className: 'Student1'},
     {content: "Group Discussion", id: "group-discussion", value: 11, className: 'Student1'},
-    {content: "Student Presentation", id: "student-presentation", value: 12, className: 'Student'},
+    {content: "Student Presentation", id: "student-presentation", value: 12, className: 'Student1'},
     {content: "Deskwork", id: "deskwork", value: 13, className: 'Student1'},
   ]);
 
@@ -77,42 +82,72 @@
     {start: '2014-04-18', end: '2014-04-20', group:"clicker-question", className:"Instructor", content:""},
     {start: '2014-04-10', end: '2014-04-13', group:"interactive-lecture", className:"Instructor", content:""},
     {start: '2014-04-18', end: '2014-04-19', group:"lecture-writing", className:"Instructor", content:""},
-    {start: '2014-04-18', end: '2014-04-19', group:"answering-question", className:"Student", content:""},
-    {start: '2014-04-19', end: '2014-04-20', group:"small-group-work", className:"Student", content:""},
-    {start: '2014-04-15', end: '2014-04-16', group:"student-presentation", className:"Student", content:""},
-    {start: '2014-04-17', end: '2014-04-19', group:"group-discussion", className:"Student", content:""},
+    {start: '2014-04-18', end: '2014-04-19', group:"answering-question", className:"Student1", content:""},
+    {start: '2014-04-19', end: '2014-04-20', group:"small-group-work", className:"Student1", content:""},
+    {start: '2014-04-15', end: '2014-04-16', group:"student-presentation", className:"Student1", content:""},
+    {start: '2014-04-17', end: '2014-04-19', group:"group-discussion", className:"Student1", content:""},
 
   ]);
 
 /* Events Timeline */
   var event_groups = new vis.DataSet([
-    {content: "Closed Display Question", id: "closed-display-question", value: 14, className:'Instructor-event'},
+    {content: "Closed Display Question", id: "closed-display-question", value: 14, className:'Instructor-event1'},
     {content: "Open Display Question", id: "open-display-question", value: 15, className:'Instructor-event1'},
-    {content: "Rhetorical Question", id: "rhetorical-question", value: 16, className:'Instructor-event'},
+    {content: "Rhetorical Question", id: "rhetorical-question", value: 16, className:'Instructor-event1'},
     {content: "Provides Feedback", id: "provide-feedback", value: 17, className:'Instructor-event1'},
     {content: "Display Question", id: "display-question", value: 18, className:'Student-event'},
-    {content: "Response to Instructor", id: "response-to-instructor", value: 19, className:'Student-event1'},
+    {content: "Response to Instructor", id: "response-to-instructor", value: 19, className:'Student-event'},
     {content: "Response to Student", id: "response-to-student", value: 20, className:'Student-event'},
-    {content: "Makes Prediction", id: "makes-prediction", value: 21, className:'Student-event1'}
+    {content: "Makes Prediction", id: "makes-prediction", value: 21, className:'Student-event'}
   ]);
 
   var event_items = new vis.DataSet([
-    {start: '2014-04-20', group:"closed-display-question", className:"Instructor-event", content:""},
+    {start: '2014-04-20', group:"closed-display-question", className:"Instructor-event1", content:""},
     {start: '2014-04-5', group:"open-display-question", className:"Instructor-event1", content:""},
-    {start: '2014-04-15', group:"rhetorical-question", className:"Instructor-event", content:""},
-    {start: '2014-04-10', group:"makes-prediction", className:"Student-event1", content:""},
+    {start: '2014-04-15', group:"rhetorical-question", className:"Instructor-event1", content:""},
+    {start: '2014-04-10', group:"makes-prediction", className:"Student-event", content:""},
     {start:'2014-04-8', group: "response-to-student", className:"Student-event", content:""},
     {start:'2014-04-18', group: "display-question", className:"Student-event", content:""}
   ])
 
+  function showActivityGroups(){
+    activity_groups.forEach(function(group){
+      activity_groups.update({id: group.id, visible: true});
+    })
+  };
+
+  function showEventGroups(){
+    event_groups.forEach(function(group){
+      event_groups.update({id: group.id, visible: true});
+    })
+  };
+
   /* Interval Timeline */
 
   // Configuration for the Timeline
-  var options = {
-  };
+ var options = {
+
+      groupTemplate: function(group){
+        var container = document.createElement('div');
+        var label = document.createElement('span');
+        label.innerHTML = ' ' + group.content;
+        container.insertAdjacentElement('afterBegin',label);
+        var hide = document.createElement('button');
+        hide.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        hide.style.fontSize = '11px';
+        hide.style.borderRadius = '29px';
+        hide.addEventListener('click',function(){
+          activity_groups.update({id: group.id, visible: false});
+          event_groups.update({id: group.id, visible: false});
+        });
+        container.insertAdjacentElement('beforeEnd',hide);
+        return container;
+    }
+};
 
   // Create a Timeline
   var timeline1 = new vis.Timeline(container, items, options);
+
   var timeline2 = new vis.Timeline(container, event_items, options);
 
   timeline1.setGroups(activity_groups);
@@ -146,7 +181,7 @@ var options = {
         dataAxis: {
             left: {
             range: {min:0, max:30}
-        }
+            }
         },
         orientation:'top',
         start: '2014-06-10',
