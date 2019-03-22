@@ -142,7 +142,7 @@
         });
         container.insertAdjacentElement('beforeEnd',hide);
         return container;
-    }
+    },
 };
 
   // Create a Timeline
@@ -197,15 +197,17 @@ var graph2d = new vis.Graph2d(container, interval_items, interval_groups, option
   function onrangechange1() {
     var range = timeline1.getWindow();
     timeline2.setWindow(range.start, range.end, {animation: false});
+    graph2d.setWindow(range.start, range.end, {animation: false});
   }
 
   function onrangechange2() {
     var range = timeline2.getWindow();
     timeline1.setWindow(range.start, range.end, {animation: false});  
+    graph2d.setWindow(range.start, range.end, {animation: false});
   }
 
   function onrangechange3() {
-    var range = timeline3.getWindow();
+    var range = graph2d.getWindow();
     timeline1.setWindow(range.start, range.end, {animation: false});
     timeline2.setWindow(range.start, range.end, {animation: false});
   }
