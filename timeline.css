@@ -1,0 +1,170 @@
+h1{
+  font-size: 20px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.vis-timeline{
+  background-color: white;
+}
+
+div.vis-item.vis-dot.Instructor-event1{
+  background-color: lightcoral;
+  border-color: lightcoral;
+}
+
+div.vis-item.vis-dot.Instructor-event{
+  background-color: lightcoral;
+  border-color: lightcoral;
+}
+
+div.vis-item.vis-dot.Student-event1{
+  background-color: #8ACFBD;
+  border-color: #8ACFBD;
+}
+
+div.vis-item.vis-dot.Student-event{
+  background-color: #8ACFBD;
+  border-color: #8ACFBD;
+}
+
+div.vis-item.vis-line.Instructor-event1{
+  background-color: lightcoral;
+  border-color: lightcoral;
+}
+
+div.vis-item.vis-line.Instructor-event{
+  background-color: lightcoral;
+  border-color: lightcoral;
+}
+
+div.vis-item.vis-line.Student-event1{
+  background-color: #8ACFBD;
+  border-color: #8ACFBD;
+}
+
+div.vis-item.vis-line.Student-event{
+  background-color: #8ACFBD;
+  border-color: #8ACFBD;
+}
+
+
+div.vis-item.vis-box.Instructor-event1{
+  background-color: lightcoral;
+  border-color: lightcoral;
+  border-width: 4px;
+}
+
+
+div.vis-item.vis-box.Instructor-event{
+  background-color: lightcoral;
+  border-color: lightcoral;
+  border-width: 4px;
+}
+
+div.vis-item.vis-box.Student-event1{
+  background-color: #8ACFBD;
+  border-color: #8ACFBD;
+  border-width: 4px;
+}
+
+div.vis-item.vis-box.Student-event{
+  background-color: #8ACFBD;
+  border-color: #8ACFBD;
+  border-width: 4px;
+}
+
+div.vis-group.Student{
+  background-color: #DFE3E2;
+  border-width: 0px;
+}
+
+div.vis-group.Student1{
+  background-color: white;
+  border-width: 1.2px;
+  border-color: #DFE3E2;
+}
+
+div.vis-group.Instructor{
+  background-color: #DFE3E2;
+  border-width: 1px;
+  border-color: white;
+}
+
+div.vis-group.Instructor1{
+  background-color: white;
+  border-width: 1px;
+  border-color: white;
+}
+
+div.vis-label.Instructor{
+  background-color: #DFE3E2;
+  border-width: 1px;
+  border-color: white;
+}
+
+div.vis-label.Student{
+  background-color: #DFE3E2;
+}
+
+div.vis-group.Instructor-event1{
+  background-color:#DFE3E2;
+  border-bottom: 1px solid white;
+}
+
+div.vis-group.Student-event1{
+  background-color: #DFE3E2;
+  border-bottom: 0px;
+}
+
+div.vis-group.Student-event{
+  border-width: 0px;
+  background-color: white;
+  border-bottom: 1px solid #bfbfbf;
+}
+
+div.vis-group.Instructor-event{
+  border-width: 0px;
+  background-color: white;
+}
+
+div.vis-label.Instructor-event{
+  background-color: white;
+}
+
+div.vis-label.Instructor-event1{
+  background-color: #DFE3E2;
+  border-bottom: 1px solid #bfbfbf;
+}
+
+div.vis-label.Student-event{
+  background-color: white;
+  border-bottom: 1px solid #bfbfbf;
+}
+
+div.vis-label.Student-event1{
+  background-color: #DFE3E2;
+}
+
+div.vis-item.vis-range.Student{
+  background-color: #8ACFBD;
+  border-color: #DFE3E2;
+  border-width: 0px;
+}
+
+div.vis-item.vis-range.Instructor{
+  background-color: lightcoral;
+  border-color: lightcoral;
+  border-width: 0px;
+}
+
+div.vis-item.vis-range.Instructor1{
+  background-color: lightcoral;
+  border-color: lightcoral;
+  border-width: 0px;
+}
+
+div.vis-item.vis-range.Student1{
+  background-color: #8ACFBD;
+  border-color: #8ACFBD;
+  border-width: 0px;
+}
