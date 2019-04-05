@@ -1,0 +1,108 @@
+<head>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- bootstrap -->
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+        <script>
+            function getCourses() {
+                console.log("getting courses");
+                $.ajax({
+                    url: 'get-courses.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(data) {
+                        for (d in data) {
+                            var $opt = $("<option>", {"class": "course-option", "value": data[d].courseID, "text": data[d].courseName});
+                            $("#course-choice").append($opt);
+                        }
+                    }
+                }); 
+            }
+    
+            function getDates() {
+                console.log("getting dates");
+                var course = document.getElementById('course-choice');
+                var c = course.options[course.selectedIndex].value;
+        
+                var select = document.getElementById("date-choice");
+                $('.date-option').each(function() {
+                    $(this).remove();
+                });
+    
+                $.ajax({
+                    url: 'get-dates.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {'course': c},
+                    success: function(data) {
+                        console.log(data);
+                        console.log(data[0].oDate);
+                        for (d in data) {
+                            var $opt = $("<option>", {"class": "date-option", "value": data[d].unixTime, "text": data[d].oDate.date});
+                            $("#date-choice").append($opt);
+                        }
+                    }
+                }); 
+            }
+    
+            function getEvents() {
+                console.log("getting events");
+                var course = document.getElementById('course-choice');
+                var c = course.options[course.selectedIndex].value;
+    
+                var dates = document.getElementById('date-choice');
+                var date = dates.options[dates.selectedIndex].value;
+                console.log("unix date: " + date);
+                
+                $.ajax({
+                    url: 'get-activities.php',
+                    type: 'POST',
+                    data: {
+                        'course': c,
+                        'date': date,
+                    },
+                    success: function(data) {
+                        if (data === 'No results') {
+                            console.log(data);
+                        } else {
+                            console.log(JSON.parse(data));
+                        }
+                    }
+                }); 
+            }
+    
+        </script>
+    </head>
+    
+    
+    
+    <body id="body" onload="getCourses()">
+        <select id="course-choice" name="course-choice" onchange="getDates()">
+            <option selected="selected">Choose A Course </option>
+        </select>
+    
+    
+        <select id="date-choice" name="date-choice">
+            <option selected="selected">Choose An Observation Date </option>
+        </select>
+    
+        <button class="submit_btn" onclick="getEvents()">Go</button>
+    
+        <div class="container">
+            <div class="averages">
+                <p>Average time spent lecturing: </p> <span></span>
+                <p>Average time spent </p>
+            </div>
+        </div>
+    
+        
+    </body>
+    
+    
+    

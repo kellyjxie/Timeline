@@ -12,7 +12,7 @@ if ($conn -> connect_error) {
 	die("Unable to connect to DB: " . $conn -> connect_error);
 }
 
-if (isset($_POST['course']) && isset($_POST['course'])) {
+if (isset($_POST['course']) && isset($_POST['date'])) {
     $course = $_POST['course'];
     $date = $_POST['date'];
 }

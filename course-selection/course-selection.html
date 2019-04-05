@@ -1,5 +1,8 @@
 <head>
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- bootstrap -->
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
@@ -48,31 +51,62 @@
             }); 
         }
 
-        function getEvents() {
-            console.log("getting events");
-            var course = document.getElementById('course-choice');
-            var c = course.options[course.selectedIndex].value;
-
-            var dates = document.getElementById('date-choice');
-            var date = dates.options[dates.selectedIndex].value;
-            console.log("unix date: " + date);
-            
-            $.ajax({
-                url: 'get-activities.php',
-                type: 'POST',
-                data: {
-                    'course': c,
-                    'date': date,
-                },
-                success: function(data) {
-                    if (data === 'No results') {
-                        console.log(data);
-                    } else {
-                        console.log(JSON.parse(data));
+        function getActivitiesAndEvents() {
+                console.log("getting events");
+                var course = document.getElementById('course-choice');
+                var c = course.options[course.selectedIndex].value;
+    
+                var dates = document.getElementById('date-choice');
+                var date = dates.options[dates.selectedIndex].value;
+                console.log("unix date: " + date);
+                
+                $.ajax({
+                    url: 'get-activities.php',
+                    type: 'POST',
+                    data: {
+                        'course': c,
+                        'date': date,
+                    },
+                    success: function(data) {
+                        if (data === 'No results') {
+                            console.log(data);
+                        } else {
+                            console.log(JSON.parse(data));
+                        }
                     }
-                }
-            }); 
-        }
+                });
+                $.ajax({
+                    url: 'get-events.php',
+                    type: 'POST',
+                    data: {
+                        'course': c,
+                        'date': date,
+                    },
+                    success: function(data) {
+                        if (data === 'No results') {
+                            console.log(data);
+                        } else {
+                            console.log(JSON.parse(data));
+                        }
+                    }
+                });
+                $.ajax({
+                    url: 'get-intervals.php',
+                    type: 'POST',
+                    data: {
+                        'course': c,
+                        'date': date,
+                    },
+                    success: function(data) {
+                        if (data === 'No results') {
+                            console.log(data);
+                        } else {
+                            // console.log(data);
+                            console.log(JSON.parse(data));
+                        }
+                    }
+                });  
+            }
 
     </script>
 </head>
@@ -89,8 +123,7 @@
         <option selected="selected">Choose An Observation Date </option>
     </select>
 
-    <button class="submit_btn" onclick="getEvents()">Go</button>
-
+    <button class="submit_btn" onclick="getActivitiesAndEvents()">Go</button>
     
 </body>
 
