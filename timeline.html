@@ -110,6 +110,33 @@
     {start:'2014-04-18', group: "display-question", className:"Student-event", content:""}
   ])
 
+  /* Interval Timeline */
+  var interval_groups = new vis.DataSet([
+    {content: "Working Out Problems", id: "working-out-problems", value: 22, className:'Instructor-interval'},
+    {content: "Writing", id: "writing", value: 23, className:'Instructor-interval'},
+    {content: "Humor", id: "humor", value: 24, className:'Instructor-interval'},
+    {content: "Anecdote / Example", id: "anecdote/example", value: 25, className:'Instructor-interval'},
+    {content: "Organization", id: "organization", value: 26, className:'Instructor-interval'},
+    {content: "Emphasis", id: "emphasis", value: 27, className:'Instructor-interval'},
+    {content: "Peer Interactions", id: "peer-interact", value: 28, className:'Student-interval'},
+    {content: "Individual Thinking", id: "individual-think", value: 27, className:'Student-interval'},
+    {content: "Taking Notes", id: "taking-notes", value: 27, className:'Student-interval'}
+  ]);
+
+  var interval_items = new vis.DataSet([
+    {start: '2014-04-20', group:"working-out-problems", className:"Instructor-interval", content:""},
+    {start: '2014-04-10', group:"writing", className:"Instructor-interval", content:""},
+    {start: '2014-04-12', group:"humor", className:"Instructor-interval", content:""},
+    {start: '2014-04-12', group:"anecdote/example", className:"Instructor-interval", content:""},
+    {start:'2014-04-10', group: "organization", className:"Instructor-interval", content:""},
+    {start:'2014-04-20', group: "emphasis", className:"Instructor-interval", content:""},
+    {start:'2014-04-18', group: "peer-interact", className:"Student-interval", content:""},
+    {start:'2014-04-18', group: "individual-think", className:"Student-interval", content:""},
+    {start:'2014-04-18', group: "taking-notes", className:"Student-interval", content:""}
+    
+    
+  ]);
+
   function showActivityGroups(){
     activity_groups.forEach(function(group){
       activity_groups.update({id: group.id, visible: true});
@@ -130,7 +157,7 @@
       groupTemplate: function(group){
         var container = document.createElement('div');
         var label = document.createElement('span');
-        label.innerHTML = ' ' + group.content;
+        label.innerHTML = group.content;
         container.insertAdjacentElement('afterBegin',label);
         var hide = document.createElement('button');
         hide.innerHTML = '<i class="fas fa-trash-alt"></i>';
@@ -145,50 +172,21 @@
     }
 };
 
+
+
   // Create a Timeline
   var timeline1 = new vis.Timeline(container, items, options);
 
   var timeline2 = new vis.Timeline(container, event_items, options);
 
+  var timeline3 = new vis.Timeline(container, interval_items, options);
+
   timeline1.setGroups(activity_groups);
   timeline1.setItems(items);
   timeline2.setGroups(event_groups);
   timeline2.setItems(event_items);
-
-var interval_groups = new vis.DataSet();
-    interval_groups.add({id: 0, content: "group0"})
-    interval_groups.add({id: 1, content: "group1"})
-    interval_groups.add({id: 2, content: "group2"})
-    interval_groups.add({id: 3, content: "group3"})
-
-var interval_items = [
-    {x: '2014-06-11', y: 5, group:0},
-    {x: '2014-06-12', y: 5, group:2},
-    {x: '2014-06-13', y: 3, group:2},
-    {x: '2014-06-14', y: 4, group:1},
-    {x: '2014-06-15', y: 1, group:2},
-    {x: '2014-06-16', y: 8, group:0},
-    {x: '2014-06-11', y: 2, group:1},
-    {x: '2014-06-12', y: 4, group:1}
-];
-
-var dataset = new vis.DataSet(interval_items);
-var options = {
-        style:'bar',
-        stack:true,
-        barChart: {width:50, align:'center', sideBySide:false}, // align: left, center, right
-        drawPoints: false,
-        dataAxis: {
-            left: {
-            range: {min:0, max:30}
-            }
-        },
-        orientation:'top',
-        start: '2014-06-10',
-        end: '2014-06-18'
-};
-var graph2d = new vis.Graph2d(container, interval_items, interval_groups, options);
-
+  timeline3.setGroups(interval_groups);
+  timelin3.setItems(interval_items);
 
 // Moving all 3 times simultaneously
   timeline1.on('rangechange', onrangechange1);
